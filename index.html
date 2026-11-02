@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>ITIL 4 Foundation Prep</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@600;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: a service-desk console. Sticky tab bar, one working panel at a time, ticket-style cards with reference numbers. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --ink:#14202e; --muted:#5a6878; --line:#d9dfe7;
+  --accent:#0b6e7f; --accent-ink:#ffffff; --accent-soft:#dcf0f2;
+  --amber:#b8650a; --good:#1d7a3e; --good-soft:#dff2e5; --bad:#b3261e; --bad-soft:#fbe4e2;
+  --f-display:"Schibsted Grotesk",system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f161e; --surface:#17212c; --ink:#e6edf4; --muted:#9aa8b8; --line:#2a3846;
+  --accent:#4cc2d3; --accent-ink:#06222a; --accent-soft:#163a42;
+  --amber:#f0a24a; --good:#5fd08a; --good-soft:#163a24; --bad:#ff8a80; --bad-soft:#3d1c1a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161e; --surface:#17212c; --ink:#e6edf4; --muted:#9aa8b8; --line:#2a3846;
+  --accent:#4cc2d3; --accent-ink:#06222a; --accent-soft:#163a42;
+  --amber:#f0a24a; --good:#5fd08a; --good-soft:#163a24; --bad:#ff8a80; --bad-soft:#3d1c1a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+header.top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px;margin-bottom:14px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:1.75rem;font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.3rem;font-weight:800;margin-bottom:10px}
+h3{font-size:1.05rem;font-weight:600}
+.ref{font-family:var(--f-mono);font-size:.78rem;color:var(--muted);letter-spacing:.04em}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto}
+nav.tabs button{font:600 .95rem var(--f-display);background:none;border:0;color:var(--muted);padding:10px 14px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+button:focus-visible,.opt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px}
+.fact b{display:block;font:800 1.5rem var(--f-display);font-variant-numeric:tabular-nums}
+.fact span{font-size:.85rem;color:var(--muted)}
+@media (max-width:560px){.facts{grid-template-columns:repeat(2,1fr)}}
+.stack{display:flex;flex-direction:column;gap:12px}
+.week{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.week .ref{padding-top:3px}
+.week ul{margin:6px 0 0;padding-left:18px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)}
+.note{background:var(--accent-soft);border-radius:8px;padding:12px 14px;font-size:.95rem}
+details.topic{background:var(--surface);border:1px solid var(--line);border-radius:8px}
+details.topic summary{cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;gap:12px;align-items:baseline;list-style:none}
+details.topic summary::-webkit-details-marker{display:none}
+details.topic summary::after{content:"+";font:600 1.2rem var(--f-mono);color:var(--muted)}
+details.topic[open] summary::after{content:"–"}
+.tbody{padding:0 16px 14px;min-width:0}
+.tbody ul,.tbody ol{padding-left:20px;margin:0 0 10px}
+.tbody li{margin-bottom:4px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{font:600 .75rem var(--f-display);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.k{font-weight:700;white-space:nowrap}
+.ex{color:var(--amber);font-style:italic}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.btn{font:600 .95rem var(--f-display);border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:6px;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.45;cursor:default}
+select{font:inherit;padding:8px 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;min-height:210px;display:flex;flex-direction:column;gap:12px;cursor:pointer;margin:14px 0}
+.card .front{font:800 1.35rem var(--f-display)}
+.card .back{font-size:1.05rem}
+.card .hint{margin-top:auto;font-size:.82rem;color:var(--muted)}
+.pill{display:inline-block;font:500 .72rem var(--f-mono);padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--ink);letter-spacing:.03em}
+.bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;flex:1;min-width:80px}
+.bar i{display:block;height:100%;background:var(--accent)}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.q .stem,.review .qtext{white-space:pre-line}
+.q .stem{font-size:1.08rem;font-weight:700;margin:8px 0 14px}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:10px;text-align:left;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:11px 13px;cursor:pointer}
+.opt .l{font-family:var(--f-mono);color:var(--muted)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.expl{margin-top:12px;font-size:.95rem;border-left:3px solid var(--accent);padding-left:12px}
+.timer{font:500 1rem var(--f-mono);font-variant-numeric:tabular-nums}
+.timer.low{color:var(--bad)}
+.score{font:800 2.6rem var(--f-display);font-variant-numeric:tabular-nums}
+.pass{color:var(--good)} .fail{color:var(--bad)}
+.topicbars{display:grid;grid-template-columns:minmax(0,180px) 1fr 52px;gap:8px 12px;align-items:center;font-size:.9rem;margin:12px 0}
+.topicbars .n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.review{border-top:1px solid var(--line);padding:12px 0}
+@media (prefers-reduced-motion:no-preference){.card,.opt{transition:background .15s,border-color .15s}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>ITIL 4 Foundation Prep</h1>
+    <span class="ref">UNOFFICIAL STUDY NOTES · ITIL® 4 FOUNDATION</span>
+  </header>
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="t-plan" aria-selected="true" data-p="plan">Plan</button>
+    <button role="tab" id="t-notes" aria-selected="false" data-p="notes">Notes</button>
+    <button role="tab" id="t-cards" aria-selected="false" data-p="cards">Flashcards</button>
+    <button role="tab" id="t-exam" aria-selected="false" data-p="exam">Practice exam</button>
+  </nav>
+
+  <section id="p-plan">
+    <div class="facts">
+      <div class="fact"><b>40</b><span>multiple-choice questions</span></div>
+      <div class="fact"><b>60 min</b><span>closed book</span></div>
+      <div class="fact"><b>26 / 40</b><span>to pass (65%)</span></div>
+      <div class="fact"><b>15 Nov</b><span>Sunday, 22:40</span></div>
+    </div>
+    <p class="note"><b>Exam: Sunday 15 November, 22:40 (Irish time).</b> The voucher expires on 18 November. Log in 30 minutes early for the check-in with the proctor. A day or two before, run PeopleCert's system check on the laptop you'll use, and don't use a work laptop: its security settings can block the exam software. Ask about extra time for non-native English speakers.</p>
+    <div class="stack" style="margin-top:18px">
+      <div class="week"><span class="ref">19–25 OCT</span><div><h3>The vocabulary and the big picture</h3>
+        <ul><li>Notes: Key concepts, Four dimensions, Service value system</li><li>Flashcards every day, 15 minutes</li><li>Learn the exact wording. The exam puts two nearly identical definitions side by side (utility and warranty, output and outcome, CI and IT asset).</li></ul></div></div>
+      <div class="week"><span class="ref">26 OCT–1 NOV</span><div><h3>Principles, value chain, 15 practice purposes</h3>
+        <ul><li>Notes: Guiding principles, Value chain, Practice purposes</li><li>Practice exam in Practice mode on Saturday. Read every explanation, even for answers you got right.</li></ul></div></div>
+      <div class="week"><span class="ref">2–8 NOV</span><div><h3>The 7 practices in detail</h3>
+        <ul><li>Notes: Detailed practices. These are 17 of the 40 questions, the biggest part of the exam.</li><li>Every day: one round of “Retry my mistakes”</li><li>Weekend: two practice exams in Exam mode, timed</li></ul></div></div>
+      <div class="week"><span class="ref">9–14 NOV</span><div><h3>Exam conditions, at exam time</h3>
+        <ul><li>Mon to Thu: one timed practice exam a day, <b>started around 22:00</b> so your brain gets used to working at that hour</li><li>Do the official sample papers from your training provider this week too</li><li>Ready when: <b>32+ out of 40</b> three times in a row, and a pass on the official samples</li><li>Sat 14: one last timed exam in the evening, then rest. Run the system check.</li></ul></div></div>
+      <div class="week"><span class="ref">SUN 15 NOV</span><div><h3>Exam day</h3>
+        <ul><li>Sleep in, no work, no new material</li><li>Afternoon: a short nap (20–30 min)</li><li>Evening: 15 minutes of flashcards, a light dinner, then a quiet room with a clear desk and your ID ready</li><li>22:10: log in for the check-in. 22:40: exam.</li></ul></div></div>
+    </div>
+    <h2 style="margin-top:26px">Exam habits</h2>
+    <p>Practice questions that only ask for a definition are much easier than the real exam, so a high score on them can give false confidence. The bank here has been rewritten in the real formats: situations, “which two statements”, missing words, and wrong answers that sound almost right. Use it to learn the reasoning, not to memorise answers.</p>
+    <div class="tw"><table><tr><th>Exam habit</th><th>Why it matters</th></tr>
+      <tr><td class="k">Answer the ITIL way</td><td>You have real experience. When your job does it differently, the exam still wants the ITIL answer.</td></tr>
+      <tr><td class="k">Underline NOT, MOSTLY, FIRST, CORRECT</td><td>One word changes the answer. Read the question twice.</td></tr>
+      <tr><td class="k">Remove two options first</td><td>Usually two are clearly wrong. Then compare the last two word by word.</td></tr>
+      <tr><td class="k">“Which two” questions</td><td>Decide on each statement alone (true or false), then find the option that matches.</td></tr>
+      <tr><td class="k">Watch for swapped definitions</td><td>A wrong answer is often the exact definition of a neighbouring term (deployment vs release, problem vs known error).</td></tr>
+      <tr><td class="k">About 90 seconds each</td><td>Flag hard questions and come back. Never leave one blank: there is no penalty for guessing.</td></tr>
+    </table></div>
+  </section>
+
+  <section id="p-notes" hidden>
+    <p class="muted">Each example in amber is an everyday IT support situation, so the theory sticks to something real.</p>
+    <div class="stack" id="notes"></div>
+  </section>
+
+  <section id="p-cards" hidden>
+    <div class="row">
+      <label for="cardTopic" class="muted">Topic</label>
+      <select id="cardTopic"></select>
+      <div class="bar" title="Cards you know"><i id="cardBar"></i></div>
+      <span class="ref" id="cardCount"></span>
+    </div>
+    <div class="card" id="card" tabindex="0" role="button" aria-label="Flip card">
+      <span class="pill" id="cardTag"></span>
+      <div class="front" id="cardFront"></div>
+      <div class="back" id="cardBack" hidden></div>
+      <div class="hint" id="cardHint">Tap or press Space to show the answer</div>
+    </div>
+    <div class="row">
+      <button class="btn" id="cardAgain">Study again</button>
+      <button class="btn primary" id="cardKnow">I know this</button>
+      <button class="btn" id="cardReset" style="margin-left:auto">Reset progress</button>
+    </div>
+  </section>
+
+  <section id="p-exam" hidden>
+    <div id="examStart" class="stack">
+      <h2>Practice exam</h2>
+      <p>40 questions picked from a bank of <span id="bankSize"></span>, weighted like the real exam (17 of them on the 7 detailed practices). Options are shuffled every time.</p>
+      <div class="row">
+        <button class="btn primary" id="startPractice">Practice mode</button>
+        <button class="btn" id="startExam">Exam mode · 60 min</button>
+        <button class="btn" id="startMistakes">Retry my mistakes</button>
+      </div>
+      <p class="muted">Practice mode shows the answer after each question. Exam mode shows nothing until the end, like the real exam.</p>
+      <p class="ref" id="bestScore"></p>
+    </div>
+    <div id="examRun" hidden>
+      <div class="row" style="margin-bottom:12px">
+        <span class="ref" id="qNum"></span>
+        <div class="bar"><i id="qBar"></i></div>
+        <span class="timer" id="timer"></span>
+      </div>
+      <div class="q">
+        <span class="pill" id="qTag"></span>
+        <div class="stem" id="qStem"></div>
+        <div class="opts" id="qOpts"></div>
+        <div class="expl" id="qExpl" hidden></div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="qPrev">Back</button>
+        <button class="btn primary" id="qNext">Next</button>
+        <button class="btn" id="qFinish" style="margin-left:auto">Finish</button>
+      </div>
+    </div>
+    <div id="examDone" hidden>
+      <div class="row" style="gap:16px"><span class="score" id="scoreBig"></span><div><h2 id="scoreMsg" style="margin:0"></h2><span class="muted" id="scoreSub"></span></div></div>
+      <div class="topicbars" id="topicBars"></div>
+      <div class="row" style="margin:8px 0 16px"><button class="btn primary" id="again">New practice exam</button></div>
+      <h3>Questions to review</h3>
+      <div id="reviewList"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const TOPICS={K:"Key concepts",D:"Four dimensions",S:"Value system & chain",G:"Guiding principles",P:"Practice purposes",X:"Detailed practices"};
+// questions per topic in one 40-question paper, close to the syllabus weighting
+const WEIGHT={K:5,D:2,S:3,G:6,P:7,X:17};
+
+const NOTES=[
+{t:"K",h:"Key concepts",html:`
+<p>Learn these words exactly. The exam often offers two answers that differ by one word.</p>
+<div class="tw"><table><tr><th>Term</th><th>Meaning</th></tr>
+<tr><td class="k">Value</td><td>The perceived benefits, usefulness and importance of something. Value is <b>co-created</b> by provider and consumer.</td></tr>
+<tr><td class="k">Service</td><td>A means of enabling value co-creation by facilitating outcomes customers want, without the customer managing specific costs and risks.</td></tr>
+<tr><td class="k">Product</td><td>A configuration of resources, created by the organization, that will be potentially valuable for its customers.</td></tr>
+<tr><td class="k">Service offering</td><td>A description of services designed for a target consumer group. It may include <b>goods</b>, <b>access to resources</b> and <b>service actions</b>.</td></tr>
+<tr><td class="k">Output</td><td>A tangible or intangible deliverable of an activity. <span class="ex">A laptop set up for a new starter.</span></td></tr>
+<tr><td class="k">Outcome</td><td>A result for a stakeholder enabled by one or more outputs. <span class="ex">The new starter can work from their first day.</span></td></tr>
+<tr><td class="k">Utility</td><td>The functionality offered to meet a particular need. "Fit for purpose", or what the service does.</td></tr>
+<tr><td class="k">Warranty</td><td>Assurance that a product or service will meet agreed requirements. "Fit for use": availability, capacity, security, continuity.</td></tr>
+<tr><td class="k">Risk</td><td>A possible event that could cause harm or loss, or make it more difficult to achieve objectives.</td></tr>
+<tr><td class="k">Costs</td><td>Costs <b>removed</b> from the consumer (staff, hardware they no longer need) and costs <b>imposed</b> on the consumer (the price, training, network).</td></tr>
+</table></div>
+<h3 style="margin:14px 0 6px">Roles</h3>
+<ul><li><b>Customer</b>: defines the requirements and owns the outcomes. <span class="ex">The office manager who asks for laptops for new starters.</span></li>
+<li><b>User</b>: uses the service. <span class="ex">The new starter using the laptop.</span></li>
+<li><b>Sponsor</b>: authorizes the budget.</li></ul>
+<h3 style="margin:14px 0 6px">Service relationships</h3>
+<ul><li><b>Service provision</b>: what the provider does to deliver the service</li><li><b>Service consumption</b>: what the consumer does to use it</li><li><b>Service relationship management</b>: joint activities by both to make sure value keeps being co-created</li></ul>`},
+{t:"D",h:"Four dimensions of service management",html:`
+<p>Every service must be looked at from all four dimensions. External factors (<b>PESTLE</b>: political, economic, social, technological, legal, environmental) affect all four.</p>
+<div class="tw"><table><tr><th>Dimension</th><th>Covers</th><th>Your example</th></tr>
+<tr><td class="k">Organizations and people</td><td>Structure, roles, responsibilities, culture, skills, communication</td><td class="ex">Who in the support team handles which offices</td></tr>
+<tr><td class="k">Information and technology</td><td>Information, knowledge and the technology to manage services</td><td class="ex">The ticketing tool and the knowledge base</td></tr>
+<tr><td class="k">Partners and suppliers</td><td>Relationships with other organizations, contracts, sourcing strategy</td><td class="ex">The laptop vendor and its warranty contract</td></tr>
+<tr><td class="k">Value streams and processes</td><td>How the parts work together: workflows, activities, controls</td><td class="ex">The steps from a fault being reported to it being fixed</td></tr>
+</table></div>`},
+{t:"S",h:"Service value system and value chain",html:`
+<p>The <b>service value system (SVS)</b> turns <b>opportunity and demand</b> into <b>value</b>. It has five components:</p>
+<ol><li>Guiding principles</li><li>Governance</li><li>Service value chain</li><li>Practices</li><li>Continual improvement</li></ol>
+<p class="note">Trap: the four dimensions are <b>not</b> a component of the SVS.</p>
+<h3 style="margin:14px 0 6px">The six value chain activities</h3>
+<div class="tw"><table><tr><th>Activity</th><th>Purpose</th></tr>
+<tr><td class="k">Plan</td><td>A shared understanding of the vision, current status and improvement direction, for all four dimensions and all products and services</td></tr>
+<tr><td class="k">Improve</td><td>Continual improvement of products, services and practices across all value chain activities and the four dimensions</td></tr>
+<tr><td class="k">Engage</td><td>A good understanding of stakeholder needs, transparency and good relationships with all stakeholders</td></tr>
+<tr><td class="k">Design and transition</td><td>Products and services continually meet stakeholder expectations for quality, costs and time to market</td></tr>
+<tr><td class="k">Obtain/build</td><td>Service components are available when and where needed, and meet agreed specifications</td></tr>
+<tr><td class="k">Deliver and support</td><td>Services are delivered and supported according to agreed specifications and stakeholders' expectations</td></tr>
+</table></div>
+<p class="ex">Moving staff to a new email system: Plan (the project), Design and transition (design and go-live), Obtain/build (setting up the mailboxes), Deliver and support (helping users once it is live).</p>`},
+{t:"G",h:"The 7 guiding principles",html:`
+<div class="tw"><table><tr><th>Principle</th><th>Key idea</th><th>Your example</th></tr>
+<tr><td class="k">Focus on value</td><td>Everything should link back to value for stakeholders</td><td class="ex">Laptops exist so people can work, not so tickets get closed</td></tr>
+<tr><td class="k">Start where you are</td><td>Don't start from scratch. Assess what exists, using measurement and observation.</td><td class="ex">Reuse the existing laptop build instead of making a new one</td></tr>
+<tr><td class="k">Progress iteratively with feedback</td><td>Work in small, manageable steps with feedback loops</td><td class="ex">Roll out to one team, get feedback, then to everyone</td></tr>
+<tr><td class="k">Collaborate and promote visibility</td><td>Work together across boundaries. Poor visibility leads to poor decisions.</td><td class="ex">A shared board the whole team can see</td></tr>
+<tr><td class="k">Think and work holistically</td><td>No service or part stands alone. Look at the end-to-end picture.</td><td class="ex">Email depends on the network, licences and identity</td></tr>
+<tr><td class="k">Keep it simple and practical</td><td>Use the minimum number of steps. Remove what doesn't add value.</td><td class="ex">One standard form for all new-starter requests</td></tr>
+<tr><td class="k">Optimize and automate</td><td><b>Optimize first, then automate.</b> Human involvement only where it adds value.</td><td class="ex">Automatic ticket routing once the process is clean</td></tr>
+</table></div>`},
+{t:"P",h:"15 practices: know the purpose",html:`
+<p>For these you need the purpose (and a few key terms). The exam usually describes the purpose and asks which practice it is.</p>
+<div class="tw"><table><tr><th>Practice</th><th>Purpose</th></tr>
+<tr><td class="k">Information security management</td><td>Protect the information the organization needs to do business (confidentiality, integrity, availability)</td></tr>
+<tr><td class="k">Relationship management</td><td>Establish and nurture links with stakeholders at strategic and tactical levels</td></tr>
+<tr><td class="k">Supplier management</td><td>Make sure suppliers and their performance are managed to support seamless quality products and services. <span class="ex">The laptop vendor.</span></td></tr>
+<tr><td class="k">IT asset management</td><td>Plan and manage the full lifecycle of all IT assets. <span class="ex">Tracking every laptop from purchase to disposal.</span></td></tr>
+<tr><td class="k">Monitoring and event management</td><td>Systematically observe services and components, and record and report selected changes of state (events). <span class="ex">The monitoring tool shows a printer offline.</span></td></tr>
+<tr><td class="k">Release management</td><td>Make new and changed services and features available for use. <span class="ex">Users get the new feature in the app.</span></td></tr>
+<tr><td class="k">Service configuration management</td><td>Accurate, reliable information about services and configuration items (CIs), when and where needed. <span class="ex">Which server runs which application.</span></td></tr>
+<tr><td class="k">Deployment management</td><td>Move new or changed hardware, software, documentation or processes to live (or other) environments. <span class="ex">Installing a software update on the laptops.</span></td></tr>
+<tr><td class="k">Continual improvement</td><td>Align practices and services with changing business needs through ongoing improvement</td></tr>
+<tr><td class="k">Change enablement</td><td>Maximize successful changes by assessing risk, authorizing changes and managing the change schedule</td></tr>
+<tr><td class="k">Incident management</td><td>Minimize the negative impact of incidents by restoring normal service as quickly as possible</td></tr>
+<tr><td class="k">Problem management</td><td>Reduce the likelihood and impact of incidents by finding causes and managing workarounds and known errors</td></tr>
+<tr><td class="k">Service request management</td><td>Support agreed quality by handling all pre-defined, user-initiated service requests effectively and user-friendly</td></tr>
+<tr><td class="k">Service desk</td><td>Capture demand for incident resolution and service requests. The entry point and single point of contact for users.</td></tr>
+<tr><td class="k">Service level management</td><td>Set clear business-based targets for service performance, so delivery can be assessed, monitored and managed</td></tr>
+</table></div>
+<p class="note">Definitions they swap: a <b>configuration item</b> is any component that needs to be managed to deliver an IT service. An <b>IT asset</b> is any financially valuable component that can contribute to an IT product or service. An <b>event</b> is any change of state that matters for managing a service or CI.</p>
+<p class="note">Easy mix-up: <b>deployment</b> moves components to an environment. <b>Release</b> makes the feature available to users. You can deploy software tonight and release the feature next week.</p>`},
+{t:"X",h:"7 practices in detail",html:`
+<h3 style="margin:4px 0 6px">Incident management</h3>
+<ul><li><b>Incident</b>: an unplanned interruption to a service or reduction in its quality. <span class="ex">Email stops working for a whole office.</span></li>
+<li>Log and manage every incident. Prioritize by agreed classification based on <b>impact and urgency</b>.</li>
+<li>Complex incidents may need several teams working together ("swarming"). Major incidents get a separate procedure.</li></ul>
+<h3 style="margin:14px 0 6px">Problem management</h3>
+<ul><li><b>Problem</b>: a cause, or potential cause, of one or more incidents. <span class="ex">Laptops crash after an update, in many teams.</span></li>
+<li><b>Known error</b>: a problem that has been analysed but not resolved.</li>
+<li><b>Workaround</b>: a solution that reduces or removes the impact of an incident or problem without a full resolution. <span class="ex">Schedule a nightly reboot.</span></li>
+<li>Three phases: <b>problem identification</b> (spot trends, recurring incidents) → <b>problem control</b> (analysis, document workarounds and known errors) → <b>error control</b> (manage known errors, assess permanent fixes).</li></ul>
+<h3 style="margin:14px 0 6px">Change enablement</h3>
+<ul><li><b>Change</b>: adding, modifying or removing anything that could directly or indirectly affect services.</li>
+<li><b>Standard</b>: low risk, pre-authorized, well understood. <span class="ex">Replacing a faulty mouse with the same model.</span></li>
+<li><b>Normal</b>: scheduled, assessed and authorized by a <b>change authority</b>. <span class="ex">Upgrading the operating system on all laptops.</span></li>
+<li><b>Emergency</b>: must be implemented as soon as possible, for example to fix an incident or a security patch. Still assessed and authorized, sometimes by a separate authority.</li>
+<li>The <b>change schedule</b> is used to plan changes, help communication, avoid conflicts and assign resources.</li></ul>
+<h3 style="margin:14px 0 6px">Service request management</h3>
+<ul><li><b>Service request</b>: a request from a user that starts a service action agreed as a normal part of delivery. <span class="ex">A new mobile phone, or access to a shared folder.</span></li>
+<li>Requests should be standardized and automated as much as possible. Some need approval, some don't.</li>
+<li>Requests for information, access, and feedback, compliments or complaints all count as service requests. Something broken never does: that's an incident.</li></ul>
+<h3 style="margin:14px 0 6px">Service desk</h3>
+<ul><li>Single point of contact. Can be physical, virtual, centralized or follow-the-sun.</li>
+<li>Key skills: <b>empathy</b>, customer service, understanding of the business and incident analysis, not deep technical expertise.</li>
+<li>Uses automation where it helps, but needs a good understanding of the wider organization and its business processes.</li></ul>
+<h3 style="margin:14px 0 6px">Service level management</h3>
+<ul><li><b>Service level agreement (SLA)</b>: a documented agreement between provider and customer that sets the services and expected levels.</li>
+<li>Good SLAs relate to <b>defined outcomes</b>, not just operational metrics, and use simple language.</li>
+<li><b>Watermelon effect</b>: metrics look green but the customer is unhappy (red inside). Use customer engagement and feedback, not only metrics.</li>
+<li>SLM collects information through customer engagement (interviews, listening to concerns), customer feedback (surveys), and operational and business metrics.</li></ul>
+<h3 style="margin:14px 0 6px">Continual improvement</h3>
+<ul><li>Everyone is responsible for it. Use a <b>continual improvement register (CIR)</b> to track ideas.</li>
+<li>The 7-step model: 1 What is the vision? · 2 Where are we now? · 3 Where do we want to be? · 4 How do we get there? · 5 Take action · 6 Did we get there? · 7 How do we keep the momentum going?</li></ul>`}
+];
+
+const CARDS=[
+["K","Value","The perceived benefits, usefulness and importance of something"],
+["K","Utility","Functionality offered to meet a particular need (fit for purpose)"],
+["K","Warranty","Assurance that a product or service will meet agreed requirements (fit for use)"],
+["K","Output vs outcome","Output: a deliverable of an activity. Outcome: a result for a stakeholder enabled by outputs."],
+["K","Service offering","Description of services for a target consumer group: goods, access to resources, service actions"],
+["K","Service relationship management","Joint activities by provider and consumer to ensure continual value co-creation"],
+["K","Sponsor","The role that authorizes the budget for service consumption"],
+["K","Risk","A possible event that could cause harm or loss, or make objectives harder to achieve"],
+["D","The four dimensions","Organizations and people · Information and technology · Partners and suppliers · Value streams and processes"],
+["D","PESTLE","Political, economic, social, technological, legal, environmental: external factors affecting all four dimensions"],
+["S","SVS components","Guiding principles, governance, service value chain, practices, continual improvement"],
+["S","SVS input and output","Input: opportunity and demand. Output: value."],
+["S","The six value chain activities","Plan, Improve, Engage, Design and transition, Obtain/build, Deliver and support"],
+["S","Engage","Understand stakeholder needs, transparency and good relationships with all stakeholders"],
+["S","Obtain/build","Service components available when and where needed, meeting agreed specifications"],
+["S","Design and transition","Products and services continually meet expectations for quality, costs and time to market"],
+["G","The 7 guiding principles","Focus on value · Start where you are · Progress iteratively with feedback · Collaborate and promote visibility · Think and work holistically · Keep it simple and practical · Optimize and automate"],
+["G","Start where you are","Don't start from scratch: assess what already exists by measuring and observing"],
+["G","Optimize and automate","Optimize first, then automate. Human involvement only where it adds value."],
+["G","Keep it simple and practical","Use the minimum steps needed; remove anything that doesn't add value"],
+["P","Monitoring and event management","Systematically observe services and components; record and report selected changes of state"],
+["P","Event","Any change of state that has significance for the management of a service or CI"],
+["P","Release vs deployment","Release: make new or changed features available for use. Deployment: move components to live or other environments."],
+["P","Service configuration management","Accurate, reliable information about services and CIs, when and where needed"],
+["P","Configuration item (CI)","Any component that needs to be managed in order to deliver an IT service"],
+["P","IT asset management","Plan and manage the full lifecycle of all IT assets"],
+["P","Supplier management","Make sure suppliers and their performance are managed appropriately"],
+["P","Relationship management","Establish and nurture links with stakeholders at strategic and tactical levels"],
+["P","Information security management","Protect the information needed to do business: confidentiality, integrity, availability"],
+["X","Incident","An unplanned interruption to a service, or reduction in its quality"],
+["X","Problem","A cause, or potential cause, of one or more incidents"],
+["X","Known error","A problem that has been analysed but not resolved"],
+["X","Workaround","Reduces or removes the impact of an incident or problem without a full resolution"],
+["X","Three phases of problem management","Problem identification, problem control, error control"],
+["X","Change","Adding, modifying or removing anything that could directly or indirectly affect services"],
+["X","Standard change","Low risk, pre-authorized, well understood and fully documented"],
+["X","Emergency change","Must be implemented as soon as possible, e.g. to resolve an incident or apply a security patch"],
+["X","Service request","A user request that starts a service action agreed as a normal part of service delivery"],
+["X","Service desk purpose","Capture demand for incident resolution and service requests; single point of contact"],
+["X","Watermelon effect","SLA metrics look green but the customer is unhappy: green outside, red inside"],
+["X","Continual improvement model","Vision? · Where are we now? · Where do we want to be? · How do we get there? · Take action · Did we get there? · Keep the momentum going?"]
+];
+
+// a = index of the correct option (options are shuffled on display)
+const QS=[
+/* ---------- Key concepts ---------- */
+{t:"K",q:"Identify the missing word in the following sentence.\nA service is a means of enabling value [?] by facilitating outcomes that customers want to achieve, without the customer having to manage specific costs and risks.",o:["co-creation","delivery","realization","provision"],a:0,e:"The official definition says value co-creation. Value is created together by provider and consumer."},
+{t:"K",q:"A new app lets staff book desks from their phone. Which describes the WARRANTY of this service?",o:["The app is available 99.9% of working hours","Staff can book a desk from their phone","Staff can see which desks are free","The app sends a calendar invite for each booking"],a:0,e:"Warranty is about meeting agreed requirements: availability, capacity, security, continuity. The other three describe what the app does, which is utility."},
+{t:"K",q:"Which is an OUTCOME rather than an output?",o:["Staff serve customers without technical delays","A configured laptop with all software installed","A completed installation report for the new office","New printers installed in the office"],a:0,e:"Outputs are deliverables (a laptop, a report, installed printers). The outcome is the result for the stakeholder that those outputs enable."},
+{t:"K",q:"Which two statements about value are CORRECT?\n1. Value is defined only by the service provider\n2. Value can be co-created by the provider and the consumer\n3. Value is the perceived benefits, usefulness and importance of something\n4. Value is always measured in financial terms",o:["2 and 3","1 and 2","3 and 4","1 and 4"],a:0,e:"Value is perceived, so it is subjective and not only financial, and it is co-created."},
+{t:"K",q:"Which is a cost IMPOSED on the consumer by a service?",o:["The fees paid to the service provider","The servers the consumer no longer needs to buy","The staff the consumer no longer needs to hire","The data centre the consumer no longer runs"],a:0,e:"The three wrong options are costs removed from the consumer."},
+{t:"K",q:"A department head approves the budget for new laptops, the office manager defines what the laptops must do, and employees use them. Who is the CUSTOMER?",o:["The office manager","The department head","The employees","The laptop supplier"],a:0,e:"Customer = defines requirements and owns outcomes. The department head is the sponsor, the employees are users."},
+{t:"K",q:"What is service provision?",o:["Activities performed by an organization to provide services","Activities performed by an organization to consume services","Joint activities to ensure continual value co-creation","A description of services designed for a target group"],a:0,e:"Provision = provider side. Consumption = consumer side. Joint = service relationship management. A description of services = service offering."},
+{t:"K",q:"Identify the missing word in the following sentence.\nAn organization is a person or a group of people that has its own functions with responsibilities, authorities and relationships to achieve its [?].",o:["objectives","outcomes","value","services"],a:0,e:"The definition ends with 'to achieve its objectives'."},
+{t:"K",q:"A mobile phone contract includes a handset, use of the mobile network and help from a support line. What is use of the mobile network an example of?",o:["Access to resources","Goods","A service action","Utility"],a:0,e:"The handset is goods (ownership transfers), the network is access to resources (no ownership), the support line is a service action."},
+{t:"K",q:"What is defined as 'a configuration of an organization's resources designed to offer value for a consumer'?",o:["A product","A service","A service offering","An output"],a:0,e:"That is the definition of a product. A service offering is a description of services for a target group."},
+{t:"K",q:"Which two statements about risk are CORRECT?\n1. A service can remove risks from the consumer\n2. A service can impose new risks on the consumer\n3. Risk is only relevant to the service provider\n4. Risk is only managed by the consumer",o:["1 and 2","1 and 3","2 and 4","3 and 4"],a:0,e:"Services both remove and impose risks. Both sides have a part in managing them."},
+
+/* ---------- Four dimensions ---------- */
+{t:"D",q:"Which dimension is concerned with the workflows and controls that an organization needs to achieve agreed objectives?",o:["Value streams and processes","Organizations and people","Information and technology","Partners and suppliers"],a:0,e:"Workflows, activities and controls belong to value streams and processes."},
+{t:"D",q:"An organization is deciding whether to use a cloud provider or build its own data centre. Which dimension does this decision MOSTLY relate to?",o:["Partners and suppliers","Information and technology","Value streams and processes","Organizations and people"],a:0,e:"Sourcing strategy, meaning what to do yourself and what to buy in, is partners and suppliers. Technology is involved, but the decision is about sourcing."},
+{t:"D",q:"Which dimension includes knowledge bases, collaboration tools and the security of information?",o:["Information and technology","Organizations and people","Value streams and processes","Partners and suppliers"],a:0,e:"Information, knowledge and the technology that manages them."},
+{t:"D",q:"Which dimension considers culture, staffing, skills and competencies?",o:["Organizations and people","Value streams and processes","Partners and suppliers","Information and technology"],a:0,e:"People and culture belong to organizations and people."},
+{t:"D",q:"Which two statements about the four dimensions are CORRECT?\n1. They apply to the service value system as a whole\n2. They only apply to the service value chain\n3. Failing to address all four can make services undeliverable\n4. PESTLE factors affect only one of the dimensions",o:["1 and 3","1 and 2","2 and 4","3 and 4"],a:0,e:"The dimensions apply to the whole SVS. Ignoring one can break the service. PESTLE factors affect all four."},
+
+/* ---------- Service value system and value chain ---------- */
+{t:"S",q:"Which is NOT a component of the service value system?",o:["The four dimensions of service management","Guiding principles","Governance","Continual improvement"],a:0,e:"The five components are guiding principles, governance, service value chain, practices and continual improvement."},
+{t:"S",q:"What does the service value system describe?",o:["How all the components and activities of the organization work together to enable value creation","How the four dimensions of service management are documented and controlled","Which activities are needed to design and build a single new service","How the organization's processes are written down and audited"],a:0,e:"The SVS is the whole picture: how everything works together to create value."},
+{t:"S",q:"Identify the missing word in the following sentence.\nThe inputs to the service value system are opportunity and [?].",o:["demand","value","outcomes","resources"],a:0,e:"Opportunity and demand go in; value comes out."},
+{t:"S",q:"A supplier installs and tests new printers so that they are ready before the office opens. Which value chain activity is this MOSTLY part of?",o:["Obtain/build","Design and transition","Deliver and support","Plan"],a:0,e:"Making service components available and meeting agreed specifications is obtain/build."},
+{t:"S",q:"A user reports a fault with a room and the support team fixes it. Which value chain activity is this?",o:["Deliver and support","Obtain/build","Engage","Improve"],a:0,e:"Supporting the live service according to agreed specifications is deliver and support."},
+{t:"S",q:"The support team collects feedback from users on a new app and meets the business regularly. Which value chain activity is this?",o:["Engage","Improve","Plan","Design and transition"],a:0,e:"Understanding stakeholder needs and keeping good relationships is engage."},
+{t:"S",q:"Which value chain activity ensures that products and services continually meet stakeholder expectations for quality, costs and time to market?",o:["Design and transition","Obtain/build","Deliver and support","Engage"],a:0,e:"Quality, costs and time to market is design and transition."},
+{t:"S",q:"Which two statements about the service value chain are CORRECT?\n1. Each value chain activity uses different combinations of practices\n2. Each value chain activity is linked to exactly one practice\n3. Value streams are made of combinations of value chain activities\n4. Value chain activities must always be performed in a fixed order",o:["1 and 3","1 and 2","2 and 4","3 and 4"],a:0,e:"Activities combine practices in flexible ways, and value streams combine activities. There is no fixed order."},
+{t:"S",q:"Which component of the service value system directs and controls the organization?",o:["Governance","Practices","The service value chain","Continual improvement"],a:0,e:"Governance is the means by which an organization is directed and controlled."},
+
+/* ---------- Guiding principles ---------- */
+{t:"G",q:"A team wants to replace its ticketing tool. First, it observes and measures how the current tool is used to see what can be kept. Which guiding principle is this?",o:["Start where you are","Focus on value","Think and work holistically","Optimize and automate"],a:0,e:"Don't start from scratch; assess what already exists first."},
+{t:"G",q:"A project plans to replace a whole service in one go over 18 months, with user feedback only at the end. Which guiding principle recommends a different approach?",o:["Progress iteratively with feedback","Keep it simple and practical","Start where you are","Collaborate and promote visibility"],a:0,e:"Break work into smaller steps and get feedback along the way."},
+{t:"G",q:"A new approval process has 12 steps, and several of them add nothing. Which guiding principle should be used to fix this?",o:["Keep it simple and practical","Optimize and automate","Think and work holistically","Focus on value"],a:0,e:"Remove steps that don't add value. Optimize and automate is tempting, but it is about optimizing before automating."},
+{t:"G",q:"Before automating ticket routing, a team removes unnecessary steps from the process. Which guiding principle is this?",o:["Optimize and automate","Keep it simple and practical","Start where you are","Progress iteratively with feedback"],a:0,e:"Optimize first, then automate. The automation is the clue."},
+{t:"G",q:"A change to an app fails because nobody checked how it would affect the network team's firewall rules. Which guiding principle was ignored?",o:["Think and work holistically","Collaborate and promote visibility","Start where you are","Keep it simple and practical"],a:0,e:"No part works alone. The end-to-end view (app, network, security) was missed."},
+{t:"G",q:"Which statement about 'start where you are' is CORRECT?",o:["Measurement should support direct observation, not replace it","Existing services should be removed before new ones are designed","Data from reports is always more reliable than observing the work","Decisions should be based on how things were originally designed"],a:0,e:"ITIL warns that measurements can be misleading, so observe the work directly as well."},
+{t:"G",q:"Which is a recommendation of 'optimize and automate'?",o:["Use the other guiding principles when applying this principle","Automate as much work as possible before optimizing it","Remove all human involvement from service management","Only automate work in the deliver and support activity"],a:0,e:"ITIL says to apply the other principles alongside this one, and to keep humans where they add value."},
+{t:"G",q:"Which statement about the guiding principles is CORRECT?",o:["They can guide an organization in almost any circumstance","They must be applied one at a time in a fixed order","They only apply to IT service management work","They replace the need for practices and processes"],a:0,e:"The principles are universal and enduring. They interact and are used together."},
+{t:"G",q:"Which two statements about 'focus on value' are CORRECT?\n1. It should consider both customer experience and user experience\n2. Value depends only on the financial cost of the service\n3. It only applies to customer-facing services\n4. The organization should know who the service consumer is",o:["1 and 4","1 and 2","2 and 3","3 and 4"],a:0,e:"Know your consumer and think about their experience. Focus on value applies to every activity, not only customer-facing ones."},
+{t:"G",q:"Which statement about 'collaborate and promote visibility' is CORRECT?",o:["Collaboration does not always mean reaching consensus","Only senior management should see improvement work","Information should be shared only when work is complete","Collaboration is only needed between IT teams"],a:0,e:"ITIL notes that collaboration doesn't mean everyone must agree on everything."},
+{t:"G",q:"Which statement about 'keep it simple and practical' is CORRECT?",o:["Trying to create a solution for every exception leads to over-complication","Each exception should have its own documented rule","Complex solutions are usually more robust than simple ones","Every process should include an approval step"],a:0,e:"Don't design for every exception. Remove what doesn't add value."},
+{t:"G",q:"Which guiding principle recommends involving the right people in the right roles and making work visible?",o:["Collaborate and promote visibility","Think and work holistically","Focus on value","Progress iteratively with feedback"],a:0,e:"Collaborate and promote visibility."},
+
+/* ---------- Practice purposes and key terms ---------- */
+{t:"P",q:"A monitoring tool alerts the support team that a printer has gone offline. Which practice is MOSTLY involved in detecting this?",o:["Monitoring and event management","Incident management","Service configuration management","Problem management"],a:0,e:"Observing components and reporting changes of state is monitoring and event management. Fixing it afterwards would be incident management."},
+{t:"P",q:"A new software version is copied onto all laptops overnight. A week later, the new feature is switched on for users. Which practice is MOSTLY concerned with switching the feature on?",o:["Release management","Deployment management","Change enablement","Service configuration management"],a:0,e:"Release makes features available for use. Copying the software was deployment."},
+{t:"P",q:"A new software version is copied onto all laptops overnight. A week later, the new feature is switched on for users. Which practice is MOSTLY concerned with copying the software onto the laptops?",o:["Deployment management","Release management","Change enablement","IT asset management"],a:0,e:"Deployment moves components to environments. Release makes them available to users."},
+{t:"P",q:"Which practice keeps information about which server is connected to which application and database, and how they depend on each other?",o:["Service configuration management","IT asset management","Monitoring and event management","Relationship management"],a:0,e:"Configuration and relationships between CIs is service configuration management. Asset management is about lifecycle and value."},
+{t:"P",q:"Which practice tracks the purchase, use and disposal of all the company laptops?",o:["IT asset management","Service configuration management","Supplier management","Deployment management"],a:0,e:"The full lifecycle of IT assets."},
+{t:"P",q:"What is a configuration item?",o:["Any component that needs to be managed in order to deliver an IT service","Any financially valuable component that can contribute to an IT service","Any change of state that has significance for the management of a service","Any addition or removal of something that could affect a service"],a:0,e:"The second option is the definition of an IT asset, the third an event, the fourth a change."},
+{t:"P",q:"What is an IT asset?",o:["Any financially valuable component that can contribute to delivery of an IT product or service","Any component that needs to be managed in order to deliver an IT service","Any change of state that has significance for the management of a configuration item","Any item recorded in the configuration management system"],a:0,e:"IT asset = financially valuable component. CI = component that needs to be managed."},
+{t:"P",q:"What is an event?",o:["Any change of state that has significance for the management of a service or other configuration item","An unplanned interruption to a service or reduction in the quality of a service","A cause, or potential cause, of one or more incidents affecting a service","A notification from a user that a service is not working as expected"],a:0,e:"Event = change of state. Incident = interruption. Problem = cause."},
+{t:"P",q:"Which practice manages the performance of an outsourced support company against its contract?",o:["Supplier management","Relationship management","Service level management","IT asset management"],a:0,e:"Suppliers and their performance. Relationship management is about stakeholder links at strategic and tactical levels."},
+{t:"P",q:"What is the purpose of the relationship management practice?",o:["To establish and nurture the links between the organization and its stakeholders at strategic and tactical levels","To ensure the organization's suppliers and their performance are managed appropriately","To set clear business-based targets for service performance and manage them","To capture demand for incident resolution and service requests from users"],a:0,e:"Relationship management = stakeholders, strategic and tactical levels."},
+{t:"P",q:"Identify the missing word in the following sentence.\nThe purpose of the information security management practice is to [?] the information needed by the organization to conduct its business.",o:["protect","manage","control","share"],a:0,e:"Protect the information: confidentiality, integrity and availability."},
+{t:"P",q:"What is the purpose of the continual improvement practice?",o:["To align the organization's practices and services with changing business needs","To make sure every change is assessed and authorized before it is made","To set business-based targets so services can be monitored and managed","To reduce the likelihood of incidents by finding their causes"],a:0,e:"Continual improvement aligns practices and services with changing business needs."},
+{t:"P",q:"What is the purpose of the change enablement practice?",o:["To maximize successful changes by assessing risks, authorizing changes and managing the change schedule","To make new and changed services and features available for use after assessing their risks","To move new or changed components into live environments once they have been authorized","To ensure that accurate information about changes and CIs is available when it is needed"],a:0,e:"Change enablement: successful changes, risk assessment, authorization, change schedule."},
+{t:"P",q:"Which practice has the purpose of capturing demand for incident resolution and service requests?",o:["Service desk","Incident management","Service request management","Service level management"],a:0,e:"The service desk captures demand. Incident and request management then handle it."},
+{t:"P",q:"Which practice has the purpose of setting clear business-based targets for service performance?",o:["Service level management","Relationship management","Continual improvement","Monitoring and event management"],a:0,e:"Service level management."},
+{t:"P",q:"What is the purpose of problem management?",o:["To reduce the likelihood and impact of incidents by identifying their causes and managing workarounds and known errors","To minimize the negative impact of incidents by restoring normal service operation as quickly as possible","To maximize successful changes by ensuring risks are assessed before a fix is implemented","To capture demand for problem resolution and pass it to the right support teams"],a:0,e:"Problem management = causes, workarounds and known errors. Restoring service fast is incident management."},
+{t:"P",q:"Which statement about deployment management is CORRECT?",o:["It can also move components into test or staging environments","It makes new features available for use by customers","It is only used for hardware components","It authorizes changes before they are deployed"],a:0,e:"Deployment can target environments other than live. Making features available is release. Authorizing is change enablement."},
+
+/* ---------- Detailed practices ---------- */
+{t:"X",q:"Identify the missing word in the following sentence.\nAn incident is an unplanned interruption to a service or [?] in the quality of a service.",o:["reduction","change","failure","variation"],a:0,e:"Unplanned interruption or reduction in quality."},
+{t:"X",q:"Identify the missing words in the following sentence.\nThe purpose of incident management is to minimize the negative impact of incidents by [?] as quickly as possible.",o:["restoring normal service operation","identifying the root cause","implementing a permanent fix","logging and categorizing them"],a:0,e:"Restore normal service fast. Root cause and permanent fixes belong to problem management."},
+{t:"X",q:"Which two statements about incident management are CORRECT?\n1. Incidents should be prioritized based on impact and urgency\n2. All incidents should be resolved by the service desk\n3. Incidents should be logged and managed to meet agreed resolution times\n4. Incident management aims to find the root cause of every incident",o:["1 and 3","1 and 2","2 and 4","3 and 4"],a:0,e:"Prioritize on impact and urgency, and meet agreed times. Many incidents are escalated, and root causes are for problem management."},
+{t:"X",q:"What may be used to resolve complex incidents that need several people to work together?",o:["Swarming","Error control","A standard change","Problem identification"],a:0,e:"Swarming brings many people together to work on an incident at once."},
+{t:"X",q:"During a video call, a user reports that their headset has stopped working. What is this?",o:["An incident","A problem","A service request","A known error"],a:0,e:"An unplanned interruption to a service is an incident."},
+{t:"X",q:"Which statement about incident management is CORRECT?",o:["Information about known errors and workarounds can help resolve incidents faster","Incidents must not be resolved until their root cause is known","Users should never be allowed to resolve incidents themselves","Only incidents raised through the service desk should be logged"],a:0,e:"Incident management uses problem management's known errors and workarounds. Self-help is allowed."},
+{t:"X",q:"What is a problem?",o:["A cause, or potential cause, of one or more incidents","An unplanned interruption to a service","A problem that has been analysed but not resolved","An incident that has been open for too long"],a:0,e:"Problem = cause or potential cause."},
+{t:"X",q:"What is a known error?",o:["A problem that has been analysed but has not been resolved","A cause, or potential cause, of one or more incidents","An incident that has a documented workaround","A change that caused an incident"],a:0,e:"Known error = analysed, not resolved."},
+{t:"X",q:"Laptops freeze after a software update. Until a fix is found, the team reboots them every night. What is the nightly reboot?",o:["A workaround","A known error","A standard change","Error control"],a:0,e:"It reduces the impact without resolving the cause, so it is a workaround."},
+{t:"X",q:"Which phase of problem management includes problem analysis and documenting workarounds and known errors?",o:["Problem control","Problem identification","Error control","Incident control"],a:0,e:"Identification spots problems, control analyses them and documents workarounds and known errors, error control manages known errors."},
+{t:"X",q:"Which phase of problem management manages known errors and may identify a permanent solution?",o:["Error control","Problem control","Problem identification","Change control"],a:0,e:"Error control manages known errors and assesses permanent fixes."},
+{t:"X",q:"Which two statements about problem management are CORRECT?\n1. Problem management and incident management are closely connected\n2. Problems are always caused by technology failures\n3. Problem management may result in a change request\n4. A known error must exist before a problem can be investigated",o:["1 and 3","1 and 2","2 and 4","3 and 4"],a:0,e:"Problems can come from any of the four dimensions, and a fix often goes through change enablement."},
+{t:"X",q:"Which practice identifies recurring incidents through trend analysis?",o:["Problem management","Incident management","Monitoring and event management","Continual improvement"],a:0,e:"Trend analysis of incidents is part of problem identification."},
+{t:"X",q:"Identify the missing word in the following sentence.\nA change is the addition, modification or removal of anything that could have a direct or [?] effect on services.",o:["indirect","negative","significant","measurable"],a:0,e:"Direct or indirect effect."},
+{t:"X",q:"A faulty keyboard is replaced with the same model, following a documented and pre-approved procedure. What type of change is this?",o:["Standard change","Normal change","Emergency change","Service request"],a:0,e:"Low risk, pre-authorized, well understood: a standard change."},
+{t:"X",q:"The operating system on 300 laptops needs upgrading. The change is not pre-authorized and must be assessed before it is scheduled. What type of change is this?",o:["Normal change","Standard change","Emergency change","Major change"],a:0,e:"Scheduled, assessed and authorized by a change authority. 'Major change' is not an ITIL change type."},
+{t:"X",q:"A critical security vulnerability must be patched today to stop an active attack. What type of change is this?",o:["Emergency change","Normal change","Standard change","Urgent change"],a:0,e:"It must be implemented as soon as possible. 'Urgent change' is not an ITIL type."},
+{t:"X",q:"What should be assigned to each type of change to make sure change enablement is efficient and effective?",o:["A change authority","A service level agreement","A problem record","A configuration item"],a:0,e:"The right change authority for each change type."},
+{t:"X",q:"Which is the change schedule MOSTLY used for?",o:["Planning changes, helping communication and avoiding conflicts","Recording the incidents that were caused by changes","Pre-authorizing standard changes before they happen","Listing every configuration item affected by a change"],a:0,e:"The change schedule supports planning, communication, avoiding conflicts and assigning resources."},
+{t:"X",q:"Which two statements about change types are CORRECT?\n1. Standard changes need a new risk assessment every time they are made\n2. Emergency changes should still be assessed and authorized\n3. Normal changes need authorization from a change authority\n4. Emergency changes never need to be documented",o:["2 and 3","1 and 2","3 and 4","1 and 4"],a:0,e:"Standard changes are assessed once, when the procedure is created. Emergency changes are still assessed and authorized; documentation can be done later, but not skipped."},
+{t:"X",q:"Which is a service request?",o:["A user asks for a new mobile phone to be set up","An office printer stops working","Monitoring detects high CPU on a server","Laptops keep freezing after every update"],a:0,e:"Something agreed as a normal part of delivery is a service request. The others are an incident, an event and a problem."},
+{t:"X",q:"Which two statements about service requests are CORRECT?\n1. Service requests are a normal part of service delivery\n2. Service requests are failures or degradations of a service\n3. Some service requests need approval before they are fulfilled\n4. Service requests should never be automated",o:["1 and 3","1 and 2","2 and 4","3 and 4"],a:0,e:"Requests are normal, some need approval, and they should be automated as much as possible."},
+{t:"X",q:"Which is NOT normally handled as a service request?",o:["Reporting that a service is unavailable","A request for information","A request for access to a resource","Feedback or a compliment about a service"],a:0,e:"A service that is unavailable is an incident. ITIL includes information, access, feedback, compliments and complaints as service requests."},
+{t:"X",q:"Identify the missing word in the following sentence.\nThe purpose of the service desk practice is to capture [?] for incident resolution and service requests.",o:["demand","requirements","feedback","information"],a:0,e:"Capture demand."},
+{t:"X",q:"Which skill is MOST important for service desk staff?",o:["Empathy and emotional intelligence","Deep technical knowledge of all systems","Software development skills","Contract negotiation skills"],a:0,e:"ITIL highlights empathy, customer service and understanding of the business over deep technical skills."},
+{t:"X",q:"Which statement about the service desk is CORRECT?",o:["It may be a virtual team working from different locations","It must always be in one physical location","It should resolve every issue at first contact","It should avoid using automation"],a:0,e:"A service desk can be virtual or follow-the-sun, and should use automation where it helps."},
+{t:"X",q:"Which helps the service desk provide good support?",o:["A good understanding of the wider organization and its business processes","Avoiding contact with other support teams so that it stays independent","Handling only incidents and passing all service requests to suppliers","Waiting until users describe their issues in technical terms"],a:0,e:"The service desk needs to understand the business, its processes and the users."},
+{t:"X",q:"What is a key requirement for a successful service level agreement?",o:["It should relate to defined outcomes, not just operational metrics","It should include as many measurable metrics as possible","It should be written in technical language for accuracy","It should be agreed only by the IT department"],a:0,e:"SLAs should reflect outcomes and be simple to understand."},
+{t:"X",q:"All SLA targets are being met, but customers say they are unhappy with the service. What is this known as?",o:["The watermelon effect","A known error","Service consumption","Error control"],a:0,e:"Green outside, red inside. Service level management uses customer feedback, not only metrics."},
+{t:"X",q:"Which does service level management use to understand how customers feel about a service?",o:["Customer engagement, such as interviews and feedback surveys","System monitoring alerts only","The change schedule","The continual improvement register only"],a:0,e:"SLM needs customer engagement and feedback as well as operational metrics."},
+{t:"X",q:"Identify the missing word in the following sentence.\nThe purpose of service level management is to set clear [?]-based targets for service performance.",o:["business","technology","contract","customer"],a:0,e:"Business-based targets."},
+{t:"X",q:"Who is responsible for continual improvement?",o:["Everyone in the organization","Only the continual improvement team","Only senior management","Only the service owners"],a:0,e:"Everyone. A dedicated team can lead the work, but it is everyone's responsibility."},
+{t:"X",q:"What is the FIRST step of the continual improvement model?",o:["What is the vision?","Where are we now?","Where do we want to be?","Take action"],a:0,e:"Vision, then current state, then target."},
+{t:"X",q:"Which step of the continual improvement model sets measurable targets for the improvement?",o:["Where do we want to be?","Where are we now?","How do we get there?","Did we get there?"],a:0,e:"Step 3 defines the target state and measurable targets."},
+{t:"X",q:"Which step of the continual improvement model includes a baseline assessment?",o:["Where are we now?","What is the vision?","Take action","How do we keep the momentum going?"],a:0,e:"Step 2 measures the current state, which is the baseline."},
+{t:"X",q:"What is used to track and manage improvement ideas from identification to final action?",o:["A continual improvement register","A change schedule","A configuration management system","A service catalogue"],a:0,e:"The continual improvement register (CIR)."}
+];
+
+/* storage helpers: progress is only a convenience */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>s.replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+
+/* tabs */
+const tabs=[...document.querySelectorAll("nav.tabs button")];
+function showTab(p){tabs.forEach(b=>{const on=b.dataset.p===p;b.setAttribute("aria-selected",on);$("p-"+b.dataset.p).hidden=!on});store.set("itil-tab",p)}
+tabs.forEach(b=>b.onclick=()=>showTab(b.dataset.p));
+showTab(store.get("itil-tab","plan"));
+
+/* notes */
+$("notes").innerHTML=NOTES.map((n,i)=>`<details class="topic"${i===0?" open":""}><summary><h3>${n.h}</h3><span class="ref">${TOPICS[n.t].toUpperCase()}</span></summary><div class="tbody">${n.html}</div></details>`).join("");
+
+/* flashcards */
+let known=new Set(store.get("itil-known",[])),deck=[],ci=0;
+$("cardTopic").innerHTML=`<option value="all">All topics</option>`+Object.entries(TOPICS).map(([k,v])=>`<option value="${k}">${v}</option>`).join("");
+function buildDeck(){const t=$("cardTopic").value;const all=CARDS.map((c,i)=>i).filter(i=>t==="all"||CARDS[i][0]===t);
+  const todo=all.filter(i=>!known.has(i));deck=shuffle(todo.length?todo:all);ci=0;renderCard(all)}
+function renderCard(all){all=all||CARDS.map((c,i)=>i).filter(i=>$("cardTopic").value==="all"||CARDS[i][0]===$("cardTopic").value);
+  const k=all.filter(i=>known.has(i)).length;$("cardCount").textContent=`${k} / ${all.length} known`;$("cardBar").style.width=(all.length?k/all.length*100:0)+"%";
+  const c=CARDS[deck[ci]];$("cardTag").textContent=TOPICS[c[0]];$("cardFront").textContent=c[1];$("cardBack").textContent=c[2];$("cardBack").hidden=true;$("cardHint").hidden=false}
+function flip(){$("cardBack").hidden=!$("cardBack").hidden;$("cardHint").hidden=!$("cardBack").hidden}
+$("card").onclick=flip;$("card").onkeydown=e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();flip()}};
+function nextCard(){ci=(ci+1)%deck.length;if(ci===0)deck=shuffle(deck);renderCard()}
+$("cardKnow").onclick=()=>{known.add(deck[ci]);store.set("itil-known",[...known]);nextCard()};
+$("cardAgain").onclick=()=>{known.delete(deck[ci]);store.set("itil-known",[...known]);nextCard()};
+$("cardReset").onclick=()=>{known.clear();store.set("itil-known",[]);buildDeck()};
+$("cardTopic").onchange=buildDeck;buildDeck();
+
+/* practice exam */
+$("bankSize").textContent=QS.length;
+let ex=null,timerId=null;
+QS.forEach((q,i)=>q.id=i);
+let missed=new Set(store.get("itil-missed",[]).filter(i=>i<QS.length));
+function showBest(){const b=store.get("itil-best",null);$("bestScore").textContent=b!==null?`Best score so far: ${b} / 40`:"";
+  $("startMistakes").textContent=`Retry my mistakes (${missed.size})`;$("startMistakes").disabled=missed.size===0}
+showBest();
+function startExam(timed,only){
+  let picked=[];if(only)picked=QS.filter(q=>missed.has(q.id));
+  else Object.entries(WEIGHT).forEach(([t,n])=>picked.push(...shuffle(QS.filter(q=>q.t===t)).slice(0,n)));
+  ex={timed,only:!!only,i:0,qs:shuffle(picked).map(q=>{const order=shuffle([0,1,2,3]);return{...q,order,ans:null}}),end:timed?Date.now()+60*60*1000:null};
+  $("examStart").hidden=true;$("examDone").hidden=true;$("examRun").hidden=false;
+  clearInterval(timerId);if(timed){timerId=setInterval(tick,1000);tick()}else $("timer").textContent="";
+  renderQ()}
+function tick(){const left=Math.max(0,ex.end-Date.now());const m=Math.floor(left/60000),s=Math.floor(left/1000)%60;
+  $("timer").textContent=`${m}:${String(s).padStart(2,"0")}`;$("timer").classList.toggle("low",left<5*60000);if(left===0)finish()}
+function renderQ(){const q=ex.qs[ex.i];const n=ex.qs.length;
+  $("qNum").textContent=`QUESTION ${ex.i+1} / ${n}`;$("qBar").style.width=((ex.i+1)/n*100)+"%";
+  $("qTag").textContent=TOPICS[q.t];$("qStem").textContent=q.q;
+  const reveal=!ex.timed&&q.ans!==null;
+  $("qOpts").innerHTML=q.order.map((oi,pos)=>{let c="opt";if(q.ans===oi)c+=" sel";if(reveal){if(oi===q.a)c+=" right";else if(q.ans===oi)c+=" wrong"}
+    return`<button class="${c}" data-o="${oi}"><span class="l">${"ABCD"[pos]}</span><span>${esc(q.o[oi])}</span></button>`}).join("");
+  [...$("qOpts").children].forEach(b=>b.onclick=()=>{if(reveal)return;q.ans=+b.dataset.o;renderQ()});
+  $("qExpl").hidden=!reveal;if(reveal)$("qExpl").innerHTML=(q.ans===q.a?"<b>Correct.</b> ":"<b>Not quite.</b> ")+esc(q.e);
+  $("qPrev").disabled=ex.i===0;$("qNext").textContent=ex.i===n-1?"Finish":"Next"}
+$("qPrev").onclick=()=>{if(ex.i>0){ex.i--;renderQ()}};
+$("qNext").onclick=()=>{if(ex.i<ex.qs.length-1){ex.i++;renderQ()}else finish()};
+$("qFinish").onclick=finish;
+function finish(){clearInterval(timerId);const qs=ex.qs;const n=qs.length;const score=qs.filter(q=>q.ans===q.a).length;
+  qs.forEach(q=>{if(q.ans===q.a)missed.delete(q.id);else missed.add(q.id)});store.set("itil-missed",[...missed]);
+  if(!ex.only){const best=store.get("itil-best",null);if(best===null||score>best)store.set("itil-best",score)}showBest();
+  $("examRun").hidden=true;$("examDone").hidden=false;
+  $("scoreBig").textContent=`${score}/${n}`;
+  if(ex.only){$("scoreBig").className="score";$("scoreMsg").textContent=score===n?"All fixed":"Some still need work";
+    $("scoreSub").textContent=`Correct answers leave your mistakes list. ${missed.size} left on it.`}
+  else{const pass=score>=26;$("scoreBig").className="score "+(pass?"pass":"fail");
+  $("scoreMsg").textContent=pass?(score>=32?"Pass, and ready for the real exam":"Pass, keep practising to get above 32"):"Not a pass yet";
+  $("scoreSub").textContent=`You need 26 to pass. ${qs.filter(q=>q.ans===null).length} unanswered.`}
+  $("topicBars").innerHTML=Object.keys(TOPICS).map(t=>{const tq=qs.filter(q=>q.t===t);const ok=tq.filter(q=>q.ans===q.a).length;
+    return`<span>${TOPICS[t]}</span><div class="bar"><i style="width:${tq.length?ok/tq.length*100:0}%"></i></div><span class="n">${ok}/${tq.length}</span>`}).join("");
+  const wrong=qs.filter(q=>q.ans!==q.a);
+  $("reviewList").innerHTML=wrong.length?wrong.map(q=>`<div class="review"><span class="pill">${TOPICS[q.t]}</span><p class="qtext" style="margin:6px 0"><b>${esc(q.q)}</b></p><p style="margin:0">Answer: ${esc(q.o[q.a])}</p><p class="muted" style="margin:0">${esc(q.e)}</p></div>`).join(""):`<p class="muted">Nothing to review. Every answer was right.</p>`}
+$("startPractice").onclick=()=>startExam(false);
+$("startExam").onclick=()=>startExam(true);
+$("startMistakes").onclick=()=>startExam(false,true);
+$("again").onclick=()=>{$("examDone").hidden=true;$("examStart").hidden=false};
+</script>
+
+</body>
+</html>
