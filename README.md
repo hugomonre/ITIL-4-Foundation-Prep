@@ -1,5 +1,20 @@
 # ITIL 4 Foundation Prep
 
+Formulario protegido contra el doble envío
+M2
+Casos de usuario real para los tests del invariant
+M2
+Loaders programados de FX rates y prices
+M3, M7
+Investigación de fuentes de precios UCITS
+M7
+Comando de salud de los datos
+Desde M2
+Segundo usuario real
+M6 en adelante
+Pantalla de posiciones
+M8
+
 A self-contained study app for the ITIL 4 Foundation exam: a study plan, notes, flashcards and a practice exam in the formats used in the real exam.
 
 **Open the app:** https://hugomonre.github.io/ITIL-4-Foundation-Prep/
